@@ -154,7 +154,9 @@ public class LayMatKhauJDialog extends javax.swing.JDialog {
             MsgBox.alert(this, "Xác nhận mật khẩu phải trùng với mật khẩu mới");
         } else {
             dao.updateMatKhau(XacNhanMK, maNV);
-            MsgBox.alert(this, "Cập nhật mật khẩu thành công !!");
+            MsgBox.alert(this, "Cập nhật mật khẩu thành công !!\n Vui lòng mở lại hệ thống");
+            System.exit(0);
+//            new DangNhapJDialog(new ShoesSysJFrame(), true).setVisible(true);
         }
     }
 }

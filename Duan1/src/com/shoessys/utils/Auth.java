@@ -15,6 +15,6 @@ public class Auth {
     }
 
     public static boolean isManager() {
-        return Auth.isLogin() && user.getMaVaiTro();
+        return Auth.isLogin() && user.isVaiTro();
     }
 }

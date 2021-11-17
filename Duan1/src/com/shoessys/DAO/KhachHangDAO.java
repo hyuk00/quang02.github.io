@@ -35,6 +35,11 @@ public class KhachHangDAO extends ShoesSysDAO<KhachHang, String> {
     }
 
     @Override
+    public void vohieuhoa(String id) {
+
+    }
+
+    @Override
     public List<KhachHang> selectAll() {
         return this.selectBySql(SQL_SelectALL);
     }
@@ -67,4 +72,5 @@ public class KhachHangDAO extends ShoesSysDAO<KhachHang, String> {
             throw new RuntimeException(e);
         }
     }
+
 }

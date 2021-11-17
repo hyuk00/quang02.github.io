@@ -19,6 +19,7 @@ public class ManHinhChaoJDialog extends javax.swing.JDialog {
                 pgbTienDo.setValue(value);
                 if (value == 100) {
                     dispose();
+//                    new DangNhapJDialog(new ShoesSysJFrame(), true).setVisible(true);
                 }
             }
         }

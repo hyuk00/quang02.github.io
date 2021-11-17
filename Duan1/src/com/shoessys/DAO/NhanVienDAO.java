@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class NhanVienDAO extends ShoesSysDAO<NhanVien, String>{
-    String SQL_Insert = "INSERT INTO dbo.NhanVien (MaNV, TenNV, MatKhau, DiaChi, SDT, Email, NgaySinh, GioiTinh, AnhNV, TrangThai, VaiTro, MaXacNhan)  VALUES (?,?,?,?,?,?,?,?,?,?,?,null)";
-    String SQL_Update = "UPDATE dbo.NhanVien SET TenNV=?, MatKhau=?, DiaChi=?, SDT=?, Email=?, NgaySinh=?, GioiTinh=?, AnhNV=?, TrangThai=?, VaiTro=? WHERE MaNV=?";
+public class NhanVienDAO extends ShoesSysDAO<NhanVien, String> {
+
+    String SQL_Insert = "INSERT INTO dbo.NhanVien (MaNV, TenNV, MatKhau, DiaChi, SDT, Email, NgaySinh, GioiTinh, AnhNV, TrangThai, VaiTro, MaXacNhan)  VALUES (?,?,'1',?,?,?,?,?,?,1,?,null)";
+    String SQL_Update = "UPDATE dbo.NhanVien SET TenNV=?, DiaChi=?, SDT=?, Email=?, NgaySinh=?, GioiTinh=?, AnhNV=?, VaiTro=? WHERE MaNV=?";
+    String SQL_VoHieuHoa = "UPDATE dbo.NhanVien SET TrangThai=0 WHERE MaNV = ?";
     String SQL_SelectALL = "SELECT * FROM dbo.NhanVien";
     String SQL_SelectID = "SELECT * FROM dbo.NhanVien WHERE MaNV=?";
 
@@ -18,8 +20,8 @@ public class NhanVienDAO extends ShoesSysDAO<NhanVien, String>{
     public void insert(NhanVien entity) {
         try {
             jdbcHelper.JdbcHelper.update(SQL_Insert,
-                    entity.getMaNV(), entity.getTenNV(), entity.getMatKhau(), entity.getDiaChi(), entity.getsDT(), entity.getEmail(),
-                    entity.getNgaySinh(), entity.isGioiTinh(), entity.getAnhNV(), entity.getDiaChi(), entity.isTrangThai(), entity.isVaiTro());
+                    entity.getMaNV(), entity.getTenNV(), entity.getDiaChi(), entity.getsDT(), entity.getEmail(),
+                    entity.getNgaySinh(), entity.isGioiTinh(), entity.getAnhNV(), entity.isVaiTro());
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -29,8 +31,17 @@ public class NhanVienDAO extends ShoesSysDAO<NhanVien, String>{
     public void update(NhanVien entity) {
         try {
             jdbcHelper.JdbcHelper.update(SQL_Update,
-                    entity.getTenNV(), entity.getMatKhau(), entity.getDiaChi(), entity.getsDT(), entity.getEmail(),
-                    entity.getNgaySinh(), entity.isGioiTinh(), entity.getAnhNV(), entity.getDiaChi(), entity.isTrangThai(), entity.isVaiTro(), entity.getMaNV());
+                    entity.getTenNV(), entity.getDiaChi(), entity.getsDT(), entity.getEmail(),
+                    entity.getNgaySinh(), entity.isGioiTinh(), entity.getAnhNV(), entity.isVaiTro(), entity.getMaNV());
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void vohieuhoa(String id) {
+        try {
+            jdbcHelper.JdbcHelper.update(SQL_VoHieuHoa, id);
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -74,7 +85,7 @@ public class NhanVienDAO extends ShoesSysDAO<NhanVien, String>{
             throw new RuntimeException(e);
         }
     }
-    
+
     public void updateMaXacNhan(String MaXacNhan, String MaNV) {
         try {
             jdbcHelper.JdbcHelper.update("UPDATE dbo.NhanVien SET MaXacNhan = ? WHERE MaNV = ?",
@@ -83,7 +94,7 @@ public class NhanVienDAO extends ShoesSysDAO<NhanVien, String>{
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void updateMatKhau(String MatKhau, String MaNV) {
         try {
             jdbcHelper.JdbcHelper.update("UPDATE dbo.NhanVien SET MatKhau = ? WHERE MaNV = ?",
@@ -92,4 +103,11 @@ public class NhanVienDAO extends ShoesSysDAO<NhanVien, String>{
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public List<NhanVien> selectPage(int index) {
+        String sql = "SELECT * FROM dbo.NhanVien WHERE TrangThai = 1\n"
+                + "ORDER BY MaNV OFFSET ? * 10 ROWS FETCH NEXT 10 ROWS ONLY;";
+        return this.selectBySql(sql, index);
+    }
+
 }

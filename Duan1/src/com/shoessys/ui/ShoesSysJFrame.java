@@ -1,7 +1,10 @@
 package com.shoessys.ui;
 
+import com.shoessys.utils.Auth;
+import com.shoessys.utils.MsgBox;
 import com.shoessys.utils.XImage;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 
 public class ShoesSysJFrame extends javax.swing.JFrame {
@@ -10,13 +13,20 @@ public class ShoesSysJFrame extends javax.swing.JFrame {
     SanPhamJInternalFrame quanlisanpham;
     KhachHangJInternalFrame quanlikhachhang;
     NhaCungCapJInternalFrame quanlinhacungcap;
+    NhanVienJInternalFrame quanlinhanvien;
     Color color;
+    ImageIcon dangnhap = new ImageIcon("src/com/shoessys/icon/Key.png");
+    ImageIcon quenmk = new ImageIcon("src/com/shoessys/icon/Unlock.png");
+    ImageIcon up = new ImageIcon("src/com/shoessys/img/1.png");
+    ImageIcon User = new ImageIcon("src/com/shoessys/icon/Unknown person.png");
+    ImageIcon doimk = new ImageIcon("src/com/shoessys/icon/Refresh.png");
+    ImageIcon dangxuat = new ImageIcon("src/com/shoessys/icon/log out.png");
 
     public ShoesSysJFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
         init();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -327,10 +337,20 @@ public class ShoesSysJFrame extends javax.swing.JFrame {
 
         mniDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoessys/icon/Exit.png"))); // NOI18N
         mniDangXuat.setText("Đăng Xuất");
+        mniDangXuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniDangXuatActionPerformed(evt);
+            }
+        });
         mnuUser.add(mniDangXuat);
 
         mniDoiMatKhau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoessys/icon/Refresh.png"))); // NOI18N
         mniDoiMatKhau.setText("Đổi Mật Khẩu");
+        mniDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniDoiMatKhauActionPerformed(evt);
+            }
+        });
         mnuUser.add(mniDoiMatKhau);
 
         jMenuBar1.add(mnuUser);
@@ -384,8 +404,20 @@ public class ShoesSysJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNhaCungCapActionPerformed
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
-        // TODO add your handling code here:
+        openNhanVien();
     }//GEN-LAST:event_btnNhanVienActionPerformed
+
+    private void mniDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniDangXuatActionPerformed
+        mniDangXuat();
+    }//GEN-LAST:event_mniDangXuatActionPerformed
+
+    private void mniDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniDoiMatKhauActionPerformed
+        if (!Auth.isLogin()) {
+            new QuenMatKhauJFrame().setVisible(true);
+        } else {
+            new DoiMatKhauJInternalFrame().setVisible(true);
+        }
+    }//GEN-LAST:event_mniDoiMatKhauActionPerformed
 
     /**
      * @param args the command line arguments
@@ -465,6 +497,21 @@ public class ShoesSysJFrame extends javax.swing.JFrame {
         new DangNhapJDialog(this, true).setVisible(true);
         this.setVisible(true);
 //        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        if (!Auth.isLogin()) {
+            mnuUser.setText("StartUp");
+            mnuUser.setIcon(up);
+            mniDangXuat.setText("Đăng Nhập");
+            mniDangXuat.setIcon(dangnhap);
+            mniDoiMatKhau.setText("Quên Mật Khẩu");
+            mniDoiMatKhau.setIcon(quenmk);
+        } else {
+            mnuUser.setText(Auth.user.getMaNV());
+            mnuUser.setIcon(User);
+            mniDangXuat.setIcon(dangxuat);
+            mniDangXuat.setText("Đăng Xuất");
+            mniDoiMatKhau.setText("Đổi Mật Khẩu");
+            mniDoiMatKhau.setIcon(doimk);
+        }
     }
 
     private void chonMau() {
@@ -477,38 +524,143 @@ public class ShoesSysJFrame extends javax.swing.JFrame {
     }
 
     private void openLichSuGiaoDich() {
-        lichsugiaodich = new LSGDJInternalFrame(color);
-        int x = this.getWidth() / 2 - lichsugiaodich.getWidth() / 2;
-        int y = (this.getHeight() - 40) / 2 - lichsugiaodich.getHeight() / 2 - 40;
-        lichsugiaodich.setLocation(x, y);
-        desktop.add(lichsugiaodich);
-        lichsugiaodich.setVisible(true);
+        if (Auth.isLogin()) {
+            if (!Auth.isManager()) {
+                MsgBox.alert(this, "Bạn ko có quyền truy cập !");
+            } else {
+                try {
+                    lichsugiaodich.setClosed(true);
+                } catch (Exception e) {
+                }
+                lichsugiaodich = new LSGDJInternalFrame(color);
+                int x = this.getWidth() / 2 - lichsugiaodich.getWidth() / 2;
+                int y = (this.getHeight() - 40) / 2 - lichsugiaodich.getHeight() / 2 - 40;
+                lichsugiaodich.setLocation(x, y);
+                desktop.add(lichsugiaodich);
+                lichsugiaodich.setVisible(true);
+            }
+        } else {
+            MsgBox.alert(this, "Vui lòng đăng nhập !");
+        }
     }
 
     private void openQuanLiSanPham() {
-        quanlisanpham = new SanPhamJInternalFrame(color);
-        int x = this.getWidth() / 2 - quanlisanpham.getWidth() / 2;
-        int y = (this.getHeight() - 40) / 2 - quanlisanpham.getHeight() / 2 - 40;
-        quanlisanpham.setLocation(x, y);
-        desktop.add(quanlisanpham);
-        quanlisanpham.setVisible(true);
+        if (Auth.isLogin()) {
+            if (!Auth.isManager()) {
+                MsgBox.alert(this, "Bạn ko có quyền truy cập !");
+            } else {
+                try {
+                    quanlisanpham.setClosed(true);
+                } catch (Exception e) {
+                }
+                quanlisanpham = new SanPhamJInternalFrame(color);
+                int x = this.getWidth() / 2 - quanlisanpham.getWidth() / 2;
+                int y = (this.getHeight() - 40) / 2 - quanlisanpham.getHeight() / 2 - 40;
+                quanlisanpham.setLocation(x, y);
+                desktop.add(quanlisanpham);
+                quanlisanpham.setVisible(true);
+            }
+        } else {
+            MsgBox.alert(this, "Vui lòng đăng nhập !");
+        }
     }
 
     private void openQuanLiKhachHang() {
-        quanlikhachhang = new KhachHangJInternalFrame(color);
-        int x = this.getWidth() / 2 - quanlikhachhang.getWidth() / 2;
-        int y = (this.getHeight() - 40) / 2 - quanlikhachhang.getHeight() / 2 - 40;
-        quanlikhachhang.setLocation(x, y);
-        desktop.add(quanlikhachhang);
-        quanlikhachhang.setVisible(true);
+        if (Auth.isLogin()) {
+            try {
+                quanlikhachhang.setClosed(true);
+            } catch (Exception e) {
+            }
+            quanlikhachhang = new KhachHangJInternalFrame(color);
+            int x = this.getWidth() / 2 - quanlikhachhang.getWidth() / 2;
+            int y = (this.getHeight() - 40) / 2 - quanlikhachhang.getHeight() / 2 - 40;
+            quanlikhachhang.setLocation(x, y);
+            desktop.add(quanlikhachhang);
+            quanlikhachhang.setVisible(true);
+        } else {
+            MsgBox.alert(this, "Vui lòng đăng nhập !");
+        }
     }
-    
+
     private void openNhaCungCap() {
-        quanlinhacungcap = new NhaCungCapJInternalFrame(color);
-        int x = this.getWidth() / 2 - quanlinhacungcap.getWidth() / 2;
-        int y = (this.getHeight() - 40) / 2 - quanlinhacungcap.getHeight() / 2 - 40;
-        quanlinhacungcap.setLocation(x, y);
-        desktop.add(quanlinhacungcap);
-        quanlinhacungcap.setVisible(true);
+        if (Auth.isLogin()) {
+            if (!Auth.isManager()) {
+                MsgBox.alert(this, "Bạn ko có quyền truy cập !");
+            } else {
+                try {
+                    quanlinhacungcap.setClosed(true);
+                } catch (Exception e) {
+                }
+                quanlinhacungcap = new NhaCungCapJInternalFrame(color);
+                int x = this.getWidth() / 2 - quanlinhacungcap.getWidth() / 2;
+                int y = (this.getHeight() - 40) / 2 - quanlinhacungcap.getHeight() / 2 - 40;
+                quanlinhacungcap.setLocation(x, y);
+                desktop.add(quanlinhacungcap);
+                quanlinhacungcap.setVisible(true);
+            }
+        } else {
+            MsgBox.alert(this, "Vui lòng đăng nhập !");
+        }
+    }
+
+    private void openNhanVien() {
+        if (Auth.isLogin()) {
+            if (!Auth.isManager()) {
+                MsgBox.alert(this, "Bạn ko có quyền truy cập !");
+            } else {
+                try {
+                    quanlinhanvien.setClosed(true);
+                } catch (Exception e) {
+                }
+                quanlinhanvien = new NhanVienJInternalFrame(color);
+                int x = this.getWidth() / 2 - quanlinhanvien.getWidth() / 2;
+                int y = (this.getHeight() - 40) / 2 - quanlinhanvien.getHeight() / 2 - 40;
+                quanlinhanvien.setLocation(x, y);
+                desktop.add(quanlinhanvien);
+                quanlinhanvien.setVisible(true);
+            }
+        } else {
+            MsgBox.alert(this, "Vui lòng đăng nhập !");
+        }
+    }
+
+    private void mniDangXuat() {
+        if (Auth.user == null) {
+            mnuUser.setText("StartUp");
+            mnuUser.setIcon(up);
+            mniDangXuat.setText("Đăng Nhập");
+            mniDangXuat.setIcon(dangnhap);
+            mniDoiMatKhau.setText("Quên Mật Khẩu");
+            mniDoiMatKhau.setIcon(quenmk);
+            new DangNhapJDialog(this, true).setVisible(true);
+            mnuUser.setText(Auth.user.getMaNV());
+            mnuUser.setIcon(User);
+            mniDangXuat.setText("Đăng Xuất");
+            mniDangXuat.setIcon(dangxuat);
+            mniDoiMatKhau.setText("Đổi Mật Khẩu");
+            mniDoiMatKhau.setIcon(doimk);
+        } else if (Auth.isLogin()) {
+            mnuUser.setText("StartUp");
+            mnuUser.setIcon(up);
+            mniDangXuat.setText("Đăng Nhập");
+            mniDangXuat.setIcon(dangnhap);
+            mniDoiMatKhau.setText("Quên Mật Khẩu");
+            mniDoiMatKhau.setIcon(quenmk);
+            new DangNhapJDialog(this, true).setVisible(true);
+            mnuUser.setText(Auth.user.getMaNV());
+            mnuUser.setIcon(User);
+            mniDangXuat.setText("Đăng Xuất");
+            mniDangXuat.setIcon(dangxuat);
+            mniDoiMatKhau.setText("Đổi Mật Khẩu");
+            mniDoiMatKhau.setIcon(doimk);
+        } else {
+            new DangNhapJDialog(this, true).setVisible(true);
+            mnuUser.setText(Auth.user.getMaNV());
+            mnuUser.setIcon(User);
+            mniDangXuat.setText("Đăng Xuất");
+            mniDangXuat.setIcon(dangxuat);
+            mniDoiMatKhau.setText("Đổi Mật Khẩu");
+            mniDoiMatKhau.setIcon(doimk);
+        }
     }
 }

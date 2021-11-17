@@ -199,6 +199,7 @@ public class KhachHangJInternalFrame extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Điểm Thưởng");
 
+        jTextField6.setEditable(false);
         jTextField6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

@@ -8,9 +8,9 @@ import com.shoessys.utils.XImage;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 public class DangNhapJDialog extends javax.swing.JDialog {
 
@@ -43,7 +43,23 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     }
 
     public void resetColorLB(JLabel LB) {
-        LB.setForeground(new Color(153, 153, 0));
+        LB.setForeground(new Color(204,204,0));
+    }
+    
+    public void setColorBTN(JButton Log) {
+        Log.setBackground(new Color(0,0,204));
+    }
+
+    public void resetColorBTN(JButton Log) {
+        Log.setBackground(new Color(51,102,255));
+    }
+    
+    public void setColorBTNE(JButton Ex) {
+        Ex.setBackground(new Color(204,0,0));
+    }
+
+    public void resetColorBTNE(JButton Ex) {
+        Ex.setBackground(new Color(255,51,51));
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -69,17 +85,43 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoessys/img/Logo.png"))); // NOI18N
 
-        btnThoat.setBackground(new java.awt.Color(255, 0, 51));
+        btnThoat.setBackground(new java.awt.Color(255, 51, 51));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         btnThoat.setText("Thoát");
         btnThoat.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnThoat.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnThoat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnThoatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnThoatMouseExited(evt);
+            }
+        });
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
 
-        btnDangNhap.setBackground(new java.awt.Color(51, 51, 255));
+        btnDangNhap.setBackground(new java.awt.Color(51, 102, 255));
         btnDangNhap.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         btnDangNhap.setText("Đăng Nhập");
         btnDangNhap.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDangNhap.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDangNhap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnDangNhapMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnDangNhapMouseExited(evt);
+            }
+        });
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDangNhapActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 102));
@@ -87,7 +129,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         jLabel4.setText("Login");
 
         lblQuenMatKhau.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblQuenMatKhau.setForeground(new java.awt.Color(255, 255, 102));
+        lblQuenMatKhau.setForeground(new java.awt.Color(204, 204, 0));
         lblQuenMatKhau.setText("Quên mật khẩu ?");
         lblQuenMatKhau.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -297,6 +339,30 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         resetColorLB(lblQuenMatKhau);
     }//GEN-LAST:event_lblQuenMatKhauMouseExited
 
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        dangnhap();
+    }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        ketthuc();
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void btnDangNhapMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangNhapMouseEntered
+        setColorBTN(btnDangNhap);
+    }//GEN-LAST:event_btnDangNhapMouseEntered
+
+    private void btnDangNhapMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangNhapMouseExited
+        resetColorBTN(btnDangNhap);
+    }//GEN-LAST:event_btnDangNhapMouseExited
+
+    private void btnThoatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThoatMouseEntered
+        setColorBTNE(btnThoat);
+    }//GEN-LAST:event_btnThoatMouseEntered
+
+    private void btnThoatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThoatMouseExited
+        resetColorBTNE(btnThoat);
+    }//GEN-LAST:event_btnThoatMouseExited
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -367,6 +433,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         } else {
             Auth.user = nhanVien;
             this.dispose();
+//            new ShoesSysJFrame().setVisible(true);
         }
     }
     void ketthuc(){

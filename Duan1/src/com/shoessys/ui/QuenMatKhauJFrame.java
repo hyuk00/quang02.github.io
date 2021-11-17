@@ -229,8 +229,8 @@ public class QuenMatKhauJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHuyMouseExited
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-        new DangNhapJDialog(this, true).setVisible(true);
         this.dispose();
+        new DangNhapJDialog(this, true).setVisible(true);
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void btnTiepTucMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTiepTucMouseEntered
@@ -412,8 +412,9 @@ public class QuenMatKhauJFrame extends javax.swing.JFrame {
             MsgBox.alert(this, "Mã Xác Nhận không hợp lệ !!");
         } else {
             MsgBox.alert(this, "Xác nhận thành công");
-            new LayMatKhauJDialog(this, true, maNV).setVisible(true);
+            dao.updateMaXacNhan(null, maNV);
             this.dispose();
+            new LayMatKhauJDialog(this, true, maNV).setVisible(true);
         }
     }
 }
