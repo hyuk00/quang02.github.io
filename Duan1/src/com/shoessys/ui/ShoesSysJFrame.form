@@ -493,6 +493,9 @@
                   <Image iconType="3" name="/com/shoessys/img/out.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblExitMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblInfo">
               <Properties>

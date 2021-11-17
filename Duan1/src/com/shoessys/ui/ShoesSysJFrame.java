@@ -4,11 +4,17 @@ import com.shoessys.utils.Auth;
 import com.shoessys.utils.MsgBox;
 import com.shoessys.utils.XImage;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
+import javax.swing.Timer;
 
 public class ShoesSysJFrame extends javax.swing.JFrame {
 
+    Timer t;
     LSGDJInternalFrame lichsugiaodich;
     SanPhamJInternalFrame quanlisanpham;
     KhachHangJInternalFrame quanlikhachhang;
@@ -26,7 +32,7 @@ public class ShoesSysJFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         init();
-
+        startDongHo();
     }
 
     @SuppressWarnings("unchecked")
@@ -232,6 +238,11 @@ public class ShoesSysJFrame extends javax.swing.JFrame {
         lblDongHo.setText("00:00:00 PM");
 
         lblExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoessys/img/out.png"))); // NOI18N
+        lblExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblExitMouseClicked(evt);
+            }
+        });
 
         lblInfo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/shoessys/icon/Info.png"))); // NOI18N
@@ -419,6 +430,10 @@ public class ShoesSysJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mniDoiMatKhauActionPerformed
 
+    private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_lblExitMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -512,6 +527,20 @@ public class ShoesSysJFrame extends javax.swing.JFrame {
             mniDoiMatKhau.setText("Đổi Mật Khẩu");
             mniDoiMatKhau.setIcon(doimk);
         }
+    }
+
+    private void startDongHo() {
+        t = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
+                String text = sdf.format(date);
+                lblDongHo.setText(text);
+            }
+        }
+        );
+        t.start();
     }
 
     private void chonMau() {

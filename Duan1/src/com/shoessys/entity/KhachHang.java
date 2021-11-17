@@ -12,6 +12,7 @@ public class KhachHang {
     private String maNV;
 
     public KhachHang(String maKH, String tenKH, String sDT, String Email, String ngaySinh, boolean gioiTinh, int diemThuong, String maNV) {
+
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.sDT = sDT;
